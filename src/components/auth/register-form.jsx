@@ -7,8 +7,11 @@ import { signUpSchema } from "../../utils/validation";
 import AuthInput from "./auth-input";
 import PulseLoader from "react-spinners/PulseLoader";
 import { registerUser } from "../../features/user-slice";
+import Picture from "./picture";
 
 const RegisterForm = () => {
+  const [picture, setPicture] = React.useState();
+  const [readablePicture, setReadablePicture] = React.useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.user);
@@ -45,6 +48,7 @@ const RegisterForm = () => {
             name="name"
             type="text"
             placeholder="Full name"
+            label="Full name *"
             register={register}
             error={errors?.name?.message}
           />
@@ -52,6 +56,7 @@ const RegisterForm = () => {
             name="email"
             type="text"
             placeholder="Email address"
+            label="Email address *"
             register={register}
             error={errors?.email?.message}
           />
@@ -59,6 +64,7 @@ const RegisterForm = () => {
             name="status"
             type="text"
             placeholder="Status"
+            label="Status"
             register={register}
             error={errors?.status?.message}
           />
@@ -66,8 +72,14 @@ const RegisterForm = () => {
             name="password"
             type="password"
             placeholder="Password"
+            label="Password *"
             register={register}
             error={errors?.password?.message}
+          />
+          <Picture
+            readablePicture={readablePicture}
+            setReadablePicture={setReadablePicture}
+            setPicture={setPicture}
           />
           { error ? (
             <div>
