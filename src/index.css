@@ -22,4 +22,18 @@
         line-height: 19px;
         @apply text-dark_text_2;
     }
+    .input {
+        @apply w-full p-1.5 rounded-lg flex-1 outline-none dark:bg-dark_bg_2
+    }
+}
+
+/*---Animations---*/
+.rotateAnimation {
+    animation: rotate 0.3s forwards;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(-90deg);
+    }
 }
