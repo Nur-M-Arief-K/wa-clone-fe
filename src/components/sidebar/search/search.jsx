@@ -26,6 +26,8 @@ const Search = ({ searchLength, setSearchResults }) => {
       } catch (error) {
         setSearchResults([]);
       }
+    } else if (e.target.value === "" && e.key === "Enter") {
+      setSearchResults([]);
     }
   };
 
@@ -35,7 +37,10 @@ const Search = ({ searchLength, setSearchResults }) => {
         <div className="gap-x-2 flex items-center">
           <div className="w-full pl-2 rounded-lg flex dark:bg-dark_bg_2">
             {show || searchLength > 0 ? (
-              <span className="w-8 flex items-center justify-center rotateAnimation">
+              <span
+                className="w-8 flex items-center justify-center cursor-pointer rotateAnimation"
+                onClick={() => setSearchResults([])}
+              >
                 <ReturnIcon className="w-5 fill-green_1" />
               </span>
             ) : (
