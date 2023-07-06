@@ -1,9 +1,33 @@
 import React from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import { FilterIcon, ReturnIcon, SearchIcon } from "../../../svg";
 
-const Search = ({ searchLength }) => {
-  const [show, setShow] = React.useState("");
-  const handleSearch = (e) => {};
+const { REACT_APP_API_ENDPOINT } = process.env;
+
+const Search = ({ searchLength, setSearchResults }) => {
+  const {
+    user: { token },
+  } = useSelector((state) => state.user);
+  const [show, setShow] = React.useState(false);
+
+  const handleSearch = async (e) => {
+    if (e.target.value && e.key === "Enter") {
+      try {
+        const { data } = await axios.get(
+          `${REACT_APP_API_ENDPOINT}/user?search=${e.target.value}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSearchResults(data);
+      } catch (error) {
+        setSearchResults([]);
+      }
+    }
+  };
 
   return (
     <div className="h-[40px] py-1.5">
@@ -25,7 +49,7 @@ const Search = ({ searchLength }) => {
               className="input"
               onFocus={() => setShow(true)}
               onBlur={() => searchLength === 0 && setShow(false)}
-              onKeyDown={(e) => handleSearch(e)}
+              onKeyDown={handleSearch}
             />
           </div>
           <button className="btn">
