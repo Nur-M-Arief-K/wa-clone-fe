@@ -16,11 +16,11 @@ export const getConversations = createAsyncThunk(
   "conversation/all",
   async (token, { rejectWithValue }) => {
     try {
-      const { data } = axios.get(CONVERSATION_ENDPOINT, {
+      const { data } = await axios.get(`${CONVERSATION_ENDPOINT}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      });      
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.error.message);

@@ -25,6 +25,10 @@
     .input {
         @apply w-full p-1.5 rounded-lg flex-1 outline-none dark:bg-dark_bg_2
     }
+    .conversations {
+        height: calc(100vh - 200px);
+        overflow-y: auto;  
+    }
 }
 
 /*---Animations---*/
@@ -36,4 +40,15 @@
     0% {
         transform: rotate(-90deg);
     }
+}
+
+/*---Custom Scrollbar---*/
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #444e54;
 }
