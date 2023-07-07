@@ -1,8 +1,21 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { openCreateConversation } from "../../../features/chat-slice";
 
 const Contact = ({ contact }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { token } = user;
+  const values = {
+    receiverId: contact._id,
+    token: token,
+  };
+  const openConversation = (e) => {
+    dispatch(openCreateConversation(values));
+  };
+
   return (
-    <li className="list-none h-[72px] px-[10px] cursor-pointer hover:dark:bg-dark_bg_2 dark:text-dark_text_1">
+    <li onClick={openConversation} className="list-none h-[72px] px-[10px] cursor-pointer hover:dark:bg-dark_bg_2 dark:text-dark_text_1">
       <div className="py-[10px] flex items-center gap-x-3">
         <div className="flex items-center gap-x-3">
           {/* CONVERSATION PICTURE, GROUP PICTURE OR INDIVIDUAL USER PICTURE */}
