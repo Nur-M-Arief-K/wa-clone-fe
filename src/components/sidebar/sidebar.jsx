@@ -8,7 +8,7 @@ const Sidebar = () => {
   const [searchResults, setSearchResults] = React.useState([]);
 
   return (
-    <div className="w-[40%] h-full select-none">
+    <div className="flex0030 max-w-[40%] h-full select-none">
       <SidebarHeader />
       <Notifications />
       <Search

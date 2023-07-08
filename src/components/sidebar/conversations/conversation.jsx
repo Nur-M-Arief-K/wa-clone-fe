@@ -7,6 +7,7 @@ import { capitalize } from "../../../utils/string";
 
 const Conversation = ({ conversation }) => {
   const dispatch = useDispatch();
+  const { activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
   const values = {
@@ -20,7 +21,7 @@ const Conversation = ({ conversation }) => {
   return (
     <li
       onClick={openConversation}
-      className="h-[72px] w-full px-[10px] list-none cursor-pointer dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 dark:text-dark_text_1"
+      className={`h-[72px] w-full px-[10px] list-none cursor-pointer dark:bg-dark_bg_1 hover:${conversation._id !== activeConversation._id ? "dark:bg-dark_bg_2" : ""} dark:text-dark_text_1 ${conversation._id === activeConversation._id && "dark:bg-dark_hover_1"}`}
     >
       <div className="relative w-full py-[10px] flex items-center justify-between">
         {/* LEFT */}

@@ -9,7 +9,7 @@ const Conversations = () => {
 
   return (
     <div className="conversations scrollbar">
-      <ul>
+      <ul className="mt-[8px]">
         {conversations &&
           conversations
             .filter(

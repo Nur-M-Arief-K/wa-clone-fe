@@ -16,8 +16,8 @@ const Home = () => {
   }, [user]);
 
   return (
-    <div className="h-screen py-[19px] flex items-center justify-center dark:bg-dark_bg_1 overflow-hidden">
-      <div className="container h-screen flex">
+    <div className="h-screen flex items-center justify-center dark:bg-dark_bg_1 overflow-hidden">
+      <div className="container h-screen py-[19px] flex">
         <Sidebar />
         { activeConversation._id ? <ChatContainer /> : <WhatsappHome /> }
       </div>

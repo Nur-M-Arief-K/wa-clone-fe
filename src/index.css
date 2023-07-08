@@ -4,7 +4,12 @@
 
 @layer components {
   .container {
-    @apply w-full h-full;
+    width: calc(100% - 30px);
+    max-width: 100%;
+    @apply h-full;
+  }
+  .flex0030 {
+    flex: 0 0 30%;
   }
   .btn {
     @apply w-[40px] h-[40px] rounded-full flex items-center justify-center active:bg-dark_hover_1;
