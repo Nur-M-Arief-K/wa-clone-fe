@@ -1,6 +1,6 @@
-import React, { useReducer } from "react";
+import React from "react";
 import EmojiPickerApp from "./EmojiPickerApp";
-import Attachments from "./Attachments";
+import { Attachments } from "./attachments";
 import Input from "./Input";
 import { SendIcon } from "../../../svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,11 @@ const ChatActions = () => {
   const { activeConversation, status } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
+
   const [message, setMessage] = React.useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
+  const [showAttachments, setShowAttachments] = React.useState(false);
+
   const dispatch = useDispatch();
   const values = {
     message,
@@ -35,8 +39,19 @@ const ChatActions = () => {
       <div className="w-full flex items-center gap-x-2">
         {/* Emoji and attachments */}
         <ul className="flex gap-x-2">
-          <EmojiPickerApp textRef={textRef} message={message} setMessage={setMessage} />
-          <Attachments />
+          <EmojiPickerApp
+            textRef={textRef}
+            message={message}
+            setMessage={setMessage}
+            showEmojiPicker={showEmojiPicker}
+            setShowEmojiPicker={setShowEmojiPicker}
+            setShowAttachments={setShowAttachments}
+          />
+          <Attachments
+            showAttachments={showAttachments}
+            setShowAttachments={setShowAttachments}
+            setShowEmojiPicker={setShowEmojiPicker}
+          />
         </ul>
         {/* input */}
         <Input message={message} setMessage={setMessage} textRef={textRef} />
