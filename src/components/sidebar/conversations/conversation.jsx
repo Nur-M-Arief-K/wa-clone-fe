@@ -16,6 +16,7 @@ const Conversation = ({ conversation }) => {
   const openConversation = (e) => {
     dispatch(openCreateConversation(values));
   };
+
   return (
     <li
       onClick={openConversation}

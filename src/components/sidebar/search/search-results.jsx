@@ -1,7 +1,7 @@
 import React from "react";
 import Contact from "./contact";
 
-const SearchResults = ({ searchResults }) => {
+const SearchResults = ({ searchResults, setSearchResults }) => {
   return (
     <div className="w-full conversations scrollbar">
       <div>
@@ -14,7 +14,13 @@ const SearchResults = ({ searchResults }) => {
         <ul>
           {searchResults &&
             searchResults.map((user) => {
-              return <Contact contact={user} key={user._id} />;
+              return (
+                <Contact
+                  contact={user}
+                  key={user._id}
+                  setSearchResults={setSearchResults}
+                />
+              );
             })}
         </ul>
       </div>
