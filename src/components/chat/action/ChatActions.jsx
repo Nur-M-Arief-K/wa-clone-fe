@@ -1,5 +1,5 @@
-import React from "react";
-import EmojiPicker from "./EmojiPicker";
+import React, { useReducer } from "react";
+import EmojiPickerApp from "./EmojiPickerApp";
 import Attachments from "./Attachments";
 import Input from "./Input";
 import { SendIcon } from "../../../svg";
@@ -25,6 +25,8 @@ const ChatActions = () => {
     setMessage("");
   };
 
+  const textRef = React.useRef();
+
   return (
     <form
       onSubmit={sendMessageHandler}
@@ -33,11 +35,11 @@ const ChatActions = () => {
       <div className="w-full flex items-center gap-x-2">
         {/* Emoji and attachments */}
         <ul className="flex gap-x-2">
-          <EmojiPicker />
+          <EmojiPickerApp textRef={textRef} message={message} setMessage={setMessage} />
           <Attachments />
         </ul>
         {/* input */}
-        <Input message={message} setMessage={setMessage} />
+        <Input message={message} setMessage={setMessage} textRef={textRef} />
         <button type="submit" className="btn">
           {status === "loading" ? (
             <ClipLoader color="#E9EDEF" size={25} />
