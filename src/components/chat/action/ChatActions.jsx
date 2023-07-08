@@ -13,6 +13,7 @@ const ChatActions = () => {
   const { token } = user;
 
   const [message, setMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
   const [showAttachments, setShowAttachments] = React.useState(false);
 
@@ -25,8 +26,10 @@ const ChatActions = () => {
   };
   const sendMessageHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     await dispatch(sendMessage(values));
     setMessage("");
+    setLoading(false);
   };
 
   const textRef = React.useRef();
@@ -56,7 +59,7 @@ const ChatActions = () => {
         {/* input */}
         <Input message={message} setMessage={setMessage} textRef={textRef} />
         <button type="submit" className="btn">
-          {status === "loading" ? (
+          {status === "loading" && loading ? (
             <ClipLoader color="#E9EDEF" size={25} />
           ) : (
             <SendIcon className="dark:fill-dark_svg_1" />
