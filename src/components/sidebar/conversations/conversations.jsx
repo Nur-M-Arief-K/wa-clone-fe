@@ -1,6 +1,8 @@
 import React from "react";
+// React-redux
 import { useSelector } from "react-redux";
-import Conversation from "./conversation";
+// Components
+import { Conversation } from "./conversation";
 
 const Conversations = () => {
   const { conversations, activeConversation } = useSelector(

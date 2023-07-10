@@ -1,5 +1,4 @@
-import Search from "./search";
-import SearchResults from "./search-results";
-import Contact from "./contact";
+import { Search } from "./search";
+import { SearchResults } from "./search-results";
 
-export { Search, SearchResults, Contact };
+export { Search, SearchResults };

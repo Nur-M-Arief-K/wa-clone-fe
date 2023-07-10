@@ -1,4 +1,3 @@
-import Conversations from "./conversations";
-import Conversation from "./conversation";
+import Conversations from "./Conversations";
 
-export { Conversations, Conversation };
+export { Conversations };
