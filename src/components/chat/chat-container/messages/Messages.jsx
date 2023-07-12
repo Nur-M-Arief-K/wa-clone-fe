@@ -3,15 +3,16 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 // Components
 import { Message } from "./message";
+import { Typing } from "./message/typing";
 
-const Messages = () => {
-  const { messages } = useSelector((state) => state.chat);
+const Messages = ({ isTyping }) => {
+  const { messages, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const endRef = useRef();
 
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: "smooth" }); //scroll to the bottom
-  }, [messages]);
+  }, [messages, isTyping]);
 
   return (
     <div className="mb-[16px] bg-[url('https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358170/untitled-1_copy_rpx8yb.jpg')] bg-cover bg-no-repeat">
@@ -24,6 +25,7 @@ const Messages = () => {
               me={user._id === message.sender._id}
             />
           ))}
+          { isTyping === activeConversation._id && <Typing/> }
         <div className="mt-2" ref={endRef}></div>
       </div>
     </div>

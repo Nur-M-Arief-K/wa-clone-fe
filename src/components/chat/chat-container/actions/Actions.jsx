@@ -1,7 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 // React-redux
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../../../../features/chat-slice";
+// React-component
+import { SocketContext } from "../../../../contexts/SocketContext";
 // Components
 import { EmojiPickerApp } from "./emoji-picker";
 import { Attachments } from "./attachments";
@@ -10,16 +12,19 @@ import { SendIcon } from "../../../../svg";
 import { ClipLoader } from "react-spinners";
 
 const Actions = () => {
+  // React-redux
+  const dispatch = useDispatch();
   const { activeConversation, status } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
+  // React-context
+  const { socket } = useContext(SocketContext);
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
 
-  const dispatch = useDispatch();
   const values = {
     message,
     conversationId: activeConversation._id,
@@ -29,7 +34,8 @@ const Actions = () => {
   const sendMessageHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await dispatch(sendMessage(values));
+    const newMessage = await dispatch(sendMessage(values));
+    socket.emit("send message", newMessage.payload);
     setMessage("");
     setLoading(false);
   };

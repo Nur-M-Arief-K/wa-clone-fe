@@ -6,8 +6,9 @@ import { getConversationMessages } from "../../../features/chat-slice";
 import { Header } from "./header";
 import { Messages } from "./messages";
 import { Actions } from "./actions";
+import { checkOnlineStatus, getConversationId } from "../../../utils/chat";
 
-const ChatContainer = () => {
+const ChatContainer = ({ onlineUsers, isTyping }) => {
   const dispatch = useDispatch();
   const { activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
@@ -26,8 +27,14 @@ const ChatContainer = () => {
   return (
     <div className="relative w-full h-full border-l select-none dark:border-l-dark_border_2 overflow-hidden">
       <div>
-        <Header />
-        <Messages />
+        <Header
+          isOnline={checkOnlineStatus(
+            onlineUsers,
+            user,
+            activeConversation.users
+          )}
+        />
+        <Messages isTyping={isTyping} />
         <Actions />
       </div>
     </div>

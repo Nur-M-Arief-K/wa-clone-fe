@@ -8,7 +8,7 @@ export default function Picture({
   const [error, setError] = useState("");
   const inputRef = useRef();
   const handlePicture = (e) => {
-    let pic = e.target.files[0];
+    const pic = e.target.files[0];
     if (
       pic.type !== "image/jpeg" &&
       pic.type !== "image/jpg" &&

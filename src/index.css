@@ -40,6 +40,9 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
+  .online {
+    border: 2px solid #00a884;
+  }
 }
 
 /*---Animations---*/

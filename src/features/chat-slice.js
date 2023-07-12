@@ -100,6 +100,26 @@ export const chatSlice = createSlice({
     setActiveConversation: (state, action) => {
       state.activeConversation = action.payload;
     },
+    updateMessagesAndConversations: (state, action) => {
+      // messages should only be sent to the same activeConversation._id;
+      const conversation = state.activeConversation;
+      if (conversation._id === action.payload.conversation._id) {
+        state.messages = [...state.messages, action.payload];
+      }
+      // update conversations
+      /// Update the conversation latest message
+      const updatedConversation = {
+        ...action.payload.conversation,
+        latestMessage: action.payload,
+      };
+      /// Delete the old conversation
+      const newConversations = [...state.conversations].filter(
+        (c) => c._id !== updatedConversation._id
+      );
+      /// Add the updated conversation
+      newConversations.unshift(updatedConversation);
+      state.conversations = newConversations;
+    },
   },
   extraReducers(builder) {
     builder
@@ -141,15 +161,19 @@ export const chatSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.messages = [...state.messages, action.payload];
-        let conversation = {
+        state.messages = [...state.messages, action.payload]; // Keep the old messages and add the new one
+        // Update the conversations property
+        /// Update the conversation latest message
+        const updatedConversation = {
           ...action.payload.conversation,
           latestMessage: action.payload,
         };
-        let newConversations = [...state.conversations].filter(
-          (c) => c._id !== conversation._id
+        /// Delete the old conversation
+        const newConversations = [...state.conversations].filter(
+          (c) => c._id !== updatedConversation._id
         );
-        newConversations.unshift(conversation);
+        /// Add the updated conversation
+        newConversations.unshift(updatedConversation);
         state.conversations = newConversations;
       })
       .addCase(sendMessage.rejected, (state, action) => {
@@ -159,6 +183,7 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setActiveConversation } = chatSlice.actions;
+export const { setActiveConversation, updateMessagesAndConversations } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import axios from "axios";
 // React-redux
 import { useSelector } from "react-redux";
@@ -11,9 +11,10 @@ const Search = ({ searchLength, setSearchResults }) => {
   const {
     user: { token },
   } = useSelector((state) => state.user);
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
 
   const handleSearch = async (e) => {
+    // Run when e.target.value !== "" + enter AND e.target.value == "" + enter
     if (e.target.value && e.key === "Enter") {
       try {
         const { data } = await axios.get(

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // Form
@@ -16,8 +16,8 @@ import PulseLoader from "react-spinners/PulseLoader";
 const { REACT_APP_CLOUD_NAME, REACT_APP_CLOUD_SECRET } = process.env;
 
 const RegisterForm = () => {
-  const [picture, setPicture] = React.useState();
-  const [readablePicture, setReadablePicture] = React.useState("");
+  const [picture, setPicture] = useState(); // state pic file to upload
+  const [readablePicture, setReadablePicture] = useState(""); // state readable picture base64 tp display on the form if user has submitted it
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.user);

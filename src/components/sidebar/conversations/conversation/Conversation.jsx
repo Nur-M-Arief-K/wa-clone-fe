@@ -1,22 +1,35 @@
+import { useContext } from "react";
 // React-redux
 import { useDispatch, useSelector } from "react-redux";
 import { openCreateConversation } from "../../../../features/chat-slice";
+// React-context
+import { SocketContext } from "../../../../contexts/SocketContext";
 // Utils
 import { dateHandler } from "../../../../utils/date";
-import { getConversationId } from "../../../../utils/chat";
+import {
+  getConversationId,
+  getConversationName,
+  getConversationPicture,
+} from "../../../../utils/chat";
 import { capitalize } from "../../../../utils/string";
 
-const Conversation = ({ conversation }) => {
+const Conversation = ({ conversation, online, isTyping }) => {
+  // React-redux
   const dispatch = useDispatch();
   const { activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
+  // React-context
+  const { socket } = useContext(SocketContext);
+
   const values = {
     receiverId: getConversationId(user, conversation.users),
     token: token,
   };
-  const openConversation = (e) => {
-    dispatch(openCreateConversation(values));
+
+  const openConversation = async (e) => {
+    const conversation = await dispatch(openCreateConversation(values));
+    socket.emit("join conversation", conversation.payload._id);
   };
 
   return (
@@ -32,31 +45,39 @@ const Conversation = ({ conversation }) => {
         {/* LEFT */}
         <div className="flex items-center gap-x-3">
           {/* CONVERSATION PICTURE, GROUP PICTURE OR INDIVIDUAL USER PICTURE */}
-          <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+          <div
+            className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${
+              online && "online"
+            }`}
+          >
             <img
               className="w-full h-full object-cover"
-              src={conversation.picture}
-              alt={conversation.name}
+              src={getConversationPicture(user, conversation.users)}
+              alt={getConversationName(user, conversation.users)}
             />
           </div>
           {/* CONVERSATION NAME AND MESSAGE */}
           <div className="w-full flex flex-col">
             {/* CONVERSATION NAME */}
             <h1 className="flex items-center gap-x-2 font-bold">
-              {capitalize(conversation.name)}
+              {capitalize(getConversationName(user, conversation.users))}
             </h1>
             {/* CONVERSATION MESSAGE */}
             <div>
               <div className="flex items-center gap-x-1 dark:text-dark_text_2">
                 <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
-                  <p>
-                    {conversation.latestMessage?.message.length > 20
-                      ? `${conversation.latestMessage?.message.substring(
-                          0,
-                          20
-                        )}...`
-                      : conversation.latestMessage?.message}
-                  </p>
+                  {isTyping === conversation._id ? (
+                    <p className="text-green_1">Typing...</p>
+                  ) : (
+                    <p>
+                      {conversation.latestMessage?.message.length > 20
+                        ? `${conversation.latestMessage?.message.substring(
+                            0,
+                            20
+                          )}...`
+                        : conversation.latestMessage?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
