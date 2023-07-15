@@ -1,38 +1,40 @@
-import { CameraIcon, ContactIcon, DocumentIcon, PhotoIcon, PollIcon, StickerIcon } from "../../../../../../svg";
+import {
+  CameraIcon,
+  ContactIcon,
+  DocumentIcon,
+  PollIcon,
+  StickerIcon,
+} from "../../../../../../svg";
+import { DocumentAttachment } from "./document-attachment";
+import { PhotoAttachment } from "./photo-attachment";
 
 const Menu = () => {
-  return <ul className="absolute bottom-14 openEmojiAnimation">
-    <li>
+  return (
+    <ul className="absolute bottom-14 openEmojiAnimation">
+      <li>
         <button type="button" className="rounded-full">
-            <PollIcon />
+          <PollIcon />
         </button>
-    </li>
-    <li>
+      </li>
+      <li>
         <button type="button" className="bg-[#0EABF4] rounded-full">
-            <ContactIcon />
+          <ContactIcon />
         </button>
-    </li>
-    <li>
-        <button type="button" className="bg-[#5F66CD] rounded-full">
-            <DocumentIcon />
-        </button>
-    </li>
-    <li>
+      </li>
+      <DocumentAttachment />
+      <li>
         <button type="button" className="bg-[#D3396D] rounded-full">
-            <CameraIcon />
+          <CameraIcon />
         </button>
-    </li>
-    <li>
+      </li>
+      <li>
         <button type="button" className="rounded-full">
-            <StickerIcon />
+          <StickerIcon />
         </button>
-    </li>
-    <li>
-        <button type="button" className="bg-[#BF59CF] rounded-full">
-            <PhotoIcon />
-        </button>
-    </li>
-  </ul>;
+      </li>
+      <PhotoAttachment />
+    </ul>
+  );
 };
 
 export default Menu;

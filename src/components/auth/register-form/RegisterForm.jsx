@@ -31,7 +31,7 @@ const RegisterForm = () => {
   });
 
   const uploadImage = async () => {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("upload_preset", REACT_APP_CLOUD_SECRET);
     formData.append("file", picture);
     const { data } = await axios.post(

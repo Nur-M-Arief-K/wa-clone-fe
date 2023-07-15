@@ -6,11 +6,12 @@ import { getConversationMessages } from "../../../features/chat-slice";
 import { Header } from "./header";
 import { Messages } from "./messages";
 import { Actions } from "./actions";
-import { checkOnlineStatus, getConversationId } from "../../../utils/chat";
+import { checkOnlineStatus } from "../../../utils/chat";
+import { FilesPreview } from "./previews";
 
 const ChatContainer = ({ onlineUsers, isTyping }) => {
   const dispatch = useDispatch();
-  const { activeConversation } = useSelector((state) => state.chat);
+  const { activeConversation, files } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
   const values = {
@@ -34,8 +35,14 @@ const ChatContainer = ({ onlineUsers, isTyping }) => {
             activeConversation.users
           )}
         />
-        <Messages isTyping={isTyping} />
-        <Actions />
+        {files.length > 0 ? (
+          <FilesPreview />
+        ) : (
+          <>
+            <Messages isTyping={isTyping} />
+            <Actions />
+          </>
+        )}
       </div>
     </div>
   );

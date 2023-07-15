@@ -14,6 +14,7 @@ import SocketProvider from "./contexts/SocketContext";
 
 function App() {
   const { user } = useSelector((state) => state.user);
+  const { files } = useSelector((state) => state.chat);
   const { token } = user;
 
   return (
