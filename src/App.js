@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,6 +12,7 @@ import Register from "./pages/Register";
 // React-redux
 import { useSelector } from "react-redux";
 import SocketProvider from "./contexts/SocketContext";
+import Test from "./pages/Test";
 
 function App() {
   const { user } = useSelector((state) => state.user);
@@ -36,6 +38,11 @@ function App() {
               exact
               path="/register"
               element={!token ? <Register /> : <Navigate to="/" />}
+            />
+            <Route
+              exact
+              path="/test"
+              element={<Test />}
             />
           </Routes>
         </Router>

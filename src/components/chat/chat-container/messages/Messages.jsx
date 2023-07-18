@@ -27,7 +27,7 @@ const Messages = ({ isTyping }) => {
                   <FileMessage
                     fileMessage={file}
                     message={message}
-                    key={message._id}
+                    key={`f-${message._id}`}
                     me={user._id === message.sender._id}
                   />
                 ))}
@@ -36,7 +36,7 @@ const Messages = ({ isTyping }) => {
               {message.message.length > 0 && (
                 <Message
                   message={message}
-                  key={message._id}
+                  key={`f-${message._id}`}
                   me={user._id === message.sender._id}
                 />
               )}
