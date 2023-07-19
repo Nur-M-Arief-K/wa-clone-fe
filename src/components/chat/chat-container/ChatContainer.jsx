@@ -33,11 +33,11 @@ const ChatContainer = ({ onlineUsers, isTyping, callUser }) => {
       <div>
         {/* Display conversation profile (group or individual), video call btn, call btn, search btn, and setting btn */}
         <Header
-          isOnline={checkOnlineStatus(
-            onlineUsers,
-            user,
-            activeConversation.users
-          )}
+          isOnline={
+            activeConversation.isGroup
+              ? false
+              : checkOnlineStatus(onlineUsers, user, activeConversation.users)
+          }
           callUser={callUser}
         />
         {/* Display file(s) preview OR chat and chat actions */}

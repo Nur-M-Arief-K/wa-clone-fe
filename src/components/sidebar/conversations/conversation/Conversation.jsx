@@ -24,6 +24,7 @@ const Conversation = ({ conversation, online, isTyping }) => {
 
   const values = {
     receiverId: getConversationId(user, conversation.users),
+    isGroup: conversation.isGroup ? conversation._id : false,
     token: token,
   };
 
@@ -52,7 +53,11 @@ const Conversation = ({ conversation, online, isTyping }) => {
           >
             <img
               className="w-full h-full object-cover"
-              src={getConversationPicture(user, conversation.users)}
+              src={
+                conversation.isGroup
+                  ? conversation.picture
+                  : getConversationPicture(user, conversation.users)
+              }
               alt={getConversationName(user, conversation.users)}
             />
           </div>
@@ -60,7 +65,9 @@ const Conversation = ({ conversation, online, isTyping }) => {
           <div className="w-full flex flex-col">
             {/* CONVERSATION NAME */}
             <h1 className="flex items-center gap-x-2 font-bold">
-              {capitalize(getConversationName(user, conversation.users))}
+              {conversation.isGroup
+                ? conversation.name
+                : capitalize(getConversationName(user, conversation.users))}
             </h1>
             {/* CONVERSATION MESSAGE */}
             <div>

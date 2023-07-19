@@ -6,7 +6,7 @@ import { Conversation } from "./conversation";
 import { checkOnlineStatus } from "../../../utils/chat";
 
 const Conversations = ({ onlineUsers, isTyping }) => {
-  const { conversations } = useSelector((state) => state.chat);
+  const { conversations, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
 
   return (
@@ -16,8 +16,10 @@ const Conversations = ({ onlineUsers, isTyping }) => {
           conversations
             .filter(
               (conversation) =>
-                // Not return empty conversation
-                conversation.latestMessage
+                // Not return empty conversation except for group
+                conversation.latestMessage ||
+                conversation._id === activeConversation._id ||
+                conversation.isGroup === true
             )
             .map((conversation) => {
               const check = checkOnlineStatus(
@@ -29,8 +31,8 @@ const Conversations = ({ onlineUsers, isTyping }) => {
                 <Conversation
                   conversation={conversation}
                   key={conversation._id}
-                  online={check ? true : false}
-                  isTyping={ isTyping }
+                  online={!conversation.isGroup && check ? true : false}
+                  isTyping={isTyping}
                 />
               );
             })}

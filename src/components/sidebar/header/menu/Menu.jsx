@@ -2,15 +2,21 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../../../../features/user-slice";
 
-const Menu = () => {
+const Menu = ({ setShowCreateGroup }) => {
   const dispatch = useDispatch();
+
+  const createGroupHandler = (e) => setShowCreateGroup(true);
+
   return (
     <div
       tabIndex="0"
       className="absolute right-1 z-50 w-52 shadow-md dark:bg-dark_bg_2 dark:text-dark_text_1"
     >
       <ul>
-        <li className="py-3 pl-5 cursor-pointer hover:bg-dark_bg_3">
+        <li
+          className="py-3 pl-5 cursor-pointer hover:bg-dark_bg_3"
+          onClick={createGroupHandler}
+        >
           <span>New Group</span>
         </li>
         <li className="py-3 pl-5 cursor-pointer hover:bg-dark_bg_3">

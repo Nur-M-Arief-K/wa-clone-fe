@@ -9,10 +9,14 @@ import {
 } from "../../../../svg";
 // Utils
 import { capitalize } from "../../../../utils/string";
+import {
+  getConversationName,
+  getConversationPicture,
+} from "../../../../utils/chat";
 
 const Header = ({ isOnline, callUser }) => {
   const { activeConversation } = useSelector((state) => state.chat);
-  const { name, picture } = activeConversation;
+  const { user } = useSelector((state) => state.user);
 
   const videoCallHandler = (e) => callUser();
 
@@ -24,15 +28,27 @@ const Header = ({ isOnline, callUser }) => {
           {/* Display conversation profile picture */}
           <button className="btn">
             <img
-              src={picture}
-              alt={`${name}`}
+              src={
+                activeConversation.isGroup
+                  ? activeConversation.picture
+                  : getConversationPicture(user, activeConversation.users)
+              }
+              alt={
+                activeConversation.isGroup
+                  ? activeConversation.name
+                  : getConversationName(user, activeConversation.users)
+              }
               className="w-full h-full rounded-full object-cover"
             />
           </button>
           {/* Display conversation name and status (online or not) */}
           <div className="flex flex-col">
             <h1 className="dark:text-white text-md font-bold">
-              {capitalize(name)}
+              {activeConversation.isGroup
+                ? capitalize(activeConversation.name)
+                : capitalize(
+                    getConversationName(user, activeConversation.users)
+                  )}
             </h1>
             <span className="text-xs dark:text-dark_svg_2">
               {isOnline && "Online"}

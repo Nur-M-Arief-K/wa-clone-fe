@@ -12,18 +12,31 @@ const FileMessage = ({ fileMessage, message, me }) => {
         me && "ml-auto justify-end"
       }`}
     >
+      {!me && (
+        <div className="relative">
+          <div className="absolute top-0.5 left-[-30px]">
+            <img
+              className="w-8 h-8 rounded-full"
+              src={message.sender.picture}
+              alt=""
+            />
+          </div>
+        </div>
+      )}
       <div>
         <div
-          className={`relative h-full rounded-lg dark:text-dark_text_1 ${me ? "dark:bg-green_3" : "dark:bg-dark_bg_2"} ${
+          className={`relative h-full rounded-lg dark:text-dark_text_1 ${
+            me ? "dark:bg-green_3" : "dark:bg-dark_bg_2"
+          } ${
             me && file.public_id.split(".")[1] === "png"
               ? "bg-white"
               : "bg-green_3 p-1"
           }`}
         >
           <p
-            className={`h-full text-sm ${me ? "dark:bg-green_3" : "dark:bg-dark_bg_2"} ${
-              type !== "IMAGE" && type !== "VIDEO" ? "pb-5" : ""
-            }`}
+            className={`h-full text-sm ${
+              me ? "dark:bg-green_3" : "dark:bg-dark_bg_2"
+            } ${type !== "IMAGE" && type !== "VIDEO" ? "pb-5" : ""}`}
           >
             {type === "IMAGE" || type === "VIDEO" ? (
               <FileImageVideo url={file.secure_url} type={type} />

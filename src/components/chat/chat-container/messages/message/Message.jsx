@@ -9,6 +9,18 @@ const Message = ({ message, me }) => {
         me && "ml-auto justify-end"
       }`}
     >
+      {/* Display sender of message profile picture */}
+      {!me && (
+        <div className="relative">
+          <div className="absolute top-0.5 left-[-30px]">
+            <img
+              className="w-8 h-8 rounded-full"
+              src={message.sender.picture}
+              alt=""
+            />
+          </div>
+        </div>
+      )}
       <div>
         <div
           className={`relative h-full p-2 rounded-lg dark:text-dark_text_1 ${
